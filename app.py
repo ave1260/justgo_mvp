@@ -33,6 +33,11 @@ def add_trip():
     response_data = json.dumps({"message": "Trip added", "trip": new_trip}, ensure_ascii=False)  # 🔥 한글 유지!
     return response_data, 201, {'Content-Type': 'application/json; charset=utf-8'}
 
+# ✅ 루트 경로 추가 (올바른 위치)
+@app.route('/')
+def home():
+    return jsonify({"message": "Welcome to JustGo API!"}), 200
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
 
