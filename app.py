@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+import json
 
 app = Flask(__name__)
 
@@ -16,7 +17,8 @@ trips = [
 # 여행 목록 조회 API (한글 깨짐 방지 적용)
 @app.route('/api/trips', methods=['GET'])
 def get_trips():
-    return jsonify({"trips": trips}), 200, {'Content-Type': 'application/json; charset=utf-8'}
+    response_data = json.dumps({"trips": trips}, ensure_ascii=False)  # 🔥 한글 유지!
+    return response_data, 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 # 여행 추가 API
 @app.route('/api/trips', methods=['POST'])
@@ -28,9 +30,11 @@ def add_trip():
         "duration": data.get("duration")
     }
     trips.append(new_trip)
-    return jsonify({"message": "Trip added", "trip": new_trip}), 201, {'Content-Type': 'application/json; charset=utf-8'}
+    response_data = json.dumps({"message": "Trip added", "trip": new_trip}, ensure_ascii=False)  # 🔥 한글 유지!
+    return response_data, 201, {'Content-Type': 'application/json; charset=utf-8'}
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
+
 
 
