@@ -14,12 +14,12 @@ trips = [
 ]
 
 # 여행 목록 조회 API
-@app.route('/trips', methods=['GET'])
+@app.route('/api/trips', methods=['GET'])
 def get_trips():
     return jsonify({"trips": trips}), 200
 
 # 여행 추가 API
-@app.route('/trips', methods=['POST'])
+@app.route('/api/trips', methods=['POST'])
 def add_trip():
     data = request.json
     new_trip = {
@@ -30,6 +30,12 @@ def add_trip():
     trips.append(new_trip)
     return jsonify({"message": "Trip added", "trip": new_trip}), 201
 
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)  # Render는 5000번 포트 사용
+# 기본 홈페이지
+@app.route('/')
+def home():
+    return "Hello, JustGo!"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000)  # Gunicorn과 Render 배포 시 8000 포트 사용
+
 
