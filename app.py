@@ -7,13 +7,13 @@ app = Flask(__name__)
 def health_check():
     return jsonify({"status": "OK", "message": "Server is running"}), 200
 
-# 여행 목록 데이터
+# 임시 여행 데이터 (나중에 DB 연동 예정)
 trips = [
     {"id": 1, "destination": "서울", "duration": "3일"},
     {"id": 2, "destination": "부산", "duration": "2일"}
 ]
 
-# 여행 목록 조회 API (ensure_ascii=False 적용)
+# 여행 목록 조회 API (한글 깨짐 방지 적용)
 @app.route('/api/trips', methods=['GET'])
 def get_trips():
     return jsonify({"trips": trips}), 200, {'Content-Type': 'application/json; charset=utf-8'}
