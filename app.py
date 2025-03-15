@@ -33,8 +33,7 @@ def health_check():
 def get_trips():
     trips = Trip.query.all()
     trips_list = [{"id": trip.id, "destination": trip.destination, "duration": trip.duration} for trip in trips]
-    response_data = json.dumps({"trips": trips_list}, ensure_ascii=False)
-    return response_data, 200, {'Content-Type': 'application/json; charset=utf-8'}
+    return jsonify({"trips": trips_list}), 200
 
 # ✅ 여행 추가 API (DB에 저장)
 @app.route('/api/trips', methods=['POST'])
@@ -47,8 +46,7 @@ def add_trip():
     db.session.add(new_trip)
     db.session.commit()
 
-    response_data = json.dumps({"message": "Trip added", "trip": {"id": new_trip.id, "destination": new_trip.destination, "duration": new_trip.duration}}, ensure_ascii=False)
-    return response_data, 201, {'Content-Type': 'application/json; charset=utf-8'}
+    return jsonify({"message": "Trip added", "trip": {"id": new_trip.id, "destination": new_trip.destination, "duration": new_trip.duration}}), 201
 
 # ✅ 루트 경로 (Welcome 메시지)
 @app.route('/')
@@ -67,7 +65,6 @@ def db_test():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
-
 
 
 
