@@ -24,8 +24,10 @@ class Trip(db.Model):
 def initialize():
     print("Flask App 초기화 작업 실행!")
 
+@app.before_first_request
 def create_tables():
     db.create_all()
+
 
 # ✅ 서버 상태 체크 API
 @app.route('/health', methods=['GET'])
