@@ -20,7 +20,10 @@ class Trip(db.Model):
     duration = db.Column(db.String(20), nullable=False)
 
 # ✅ 앱 시작 시 자동으로 테이블 생성
-@app.before_first_request
+@app.before_request
+def initialize():
+    print("Flask App 초기화 작업 실행!")
+
 def create_tables():
     db.create_all()
 
