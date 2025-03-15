@@ -20,14 +20,8 @@ class Trip(db.Model):
     duration = db.Column(db.String(20), nullable=False)
 
 # ✅ 앱 시작 시 자동으로 테이블 생성
-@app.before_request
-def initialize():
-    print("Flask App 초기화 작업 실행!")
-
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
+with app.app_context():
+    db.create_all()  # ✅ 여기서 테이블을 생성하도록 변경!
 
 # ✅ 서버 상태 체크 API
 @app.route('/health', methods=['GET'])
@@ -73,6 +67,7 @@ def db_test():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
